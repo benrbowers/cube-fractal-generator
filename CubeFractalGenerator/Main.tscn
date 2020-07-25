@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Controls.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Main.gd" type="Script" id=2]
+[ext_resource path="res://bin/fractal.gdns" type="Script" id=3]
+[ext_resource path="res://camera_control.gd" type="Script" id=4]
+
+[node name="Main" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10 )
+far = 405.4
+script = ExtResource( 4 )
+
+[node name="Controls" parent="." instance=ExtResource( 1 )]
+
+[node name="Fractal" type="Spatial" parent="."]
+script = ExtResource( 3 )
+[connection signal="generate_fractal" from="Controls" to="." method="_on_Controls_generate_fractal"]
+[connection signal="material_chosen" from="Controls" to="." method="_on_Controls_material_chosen"]

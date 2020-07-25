@@ -1,0 +1,131 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Assets/HighlandGothicFLF.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Controls.gd" type="Script" id=2]
+[ext_resource path="res://Assets/stone.png" type="Texture" id=3]
+[ext_resource path="res://Assets/dirt.png" type="Texture" id=4]
+[ext_resource path="res://Assets/netherrack.png" type="Texture" id=5]
+[ext_resource path="res://Assets/blackstone.png" type="Texture" id=6]
+[ext_resource path="res://Assets/cobblestone.png" type="Texture" id=7]
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+font_data = ExtResource( 1 )
+
+[node name="Controls" type="CanvasLayer"]
+script = ExtResource( 2 )
+
+[node name="RatioLabel" type="Label" parent="."]
+margin_left = 128.0
+margin_top = 704.0
+margin_right = 405.0
+margin_bottom = 768.0
+custom_fonts/font = SubResource( 1 )
+text = "Step Ratio:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RatioEdit" type="TextEdit" parent="RatioLabel"]
+margin_left = 288.0
+margin_right = 448.0
+margin_bottom = 80.0
+custom_fonts/font = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IterationLabel" type="Label" parent="."]
+margin_left = 640.0
+margin_top = 704.0
+margin_right = 886.0
+margin_bottom = 767.0
+custom_fonts/font = SubResource( 1 )
+text = "Iterations:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IterationEdit" type="TextEdit" parent="IterationLabel"]
+margin_left = 264.0
+margin_right = 423.0
+margin_bottom = 80.0
+custom_fonts/font = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+margin_left = 400.0
+margin_top = 832.0
+margin_right = 823.0
+margin_bottom = 901.0
+custom_fonts/font = SubResource( 1 )
+text = "Generate Fractal"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuButton" type="MenuButton" parent="."]
+margin_left = 1152.0
+margin_top = 704.0
+margin_right = 1365.0
+margin_bottom = 773.0
+custom_fonts/font = SubResource( 1 )
+text = "Material"
+items = [ "Stone", ExtResource( 3 ), 0, false, false, 0, 0, null, "", false, "Dirt", ExtResource( 4 ), 0, false, false, 1, 0, null, "", false, "Netherrack", ExtResource( 5 ), 0, false, false, 2, 0, null, "", false, "Blackstone", ExtResource( 6 ), 0, false, false, 3, 0, null, "", false, "Cobblestone", ExtResource( 7 ), 0, false, false, 4, 0, null, "", false ]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Popup" type="WindowDialog" parent="."]
+anchor_right = 0.033
+anchor_bottom = 0.03
+margin_left = 568.0
+margin_top = 352.0
+margin_right = 1024.64
+margin_bottom = 455.6
+window_title = "Hold on, buckaroo"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupLabel" type="Label" parent="Popup"]
+margin_left = 16.0
+margin_right = 520.0
+margin_bottom = 136.0
+custom_fonts/font = SubResource( 2 )
+text = "Please enter the step ratio and number of iterations you would like."
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Confirmation" type="ConfirmationDialog" parent="."]
+margin_left = 536.0
+margin_top = 368.0
+margin_right = 984.0
+margin_bottom = 600.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ConfirmationLabel" type="Label" parent="Confirmation"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 440.0
+margin_bottom = 196.0
+custom_fonts/font = SubResource( 2 )
+text = "More than 7 iterations tends to brick the GPU. Would you like to Continue? "
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="text_changed" from="RatioLabel/RatioEdit" to="." method="_on_RatioEdit_text_changed"]
+[connection signal="text_changed" from="IterationLabel/IterationEdit" to="." method="_on_IterationEdit_text_changed"]
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[connection signal="confirmed" from="Confirmation" to="." method="_on_Confirmation_confirmed"]
