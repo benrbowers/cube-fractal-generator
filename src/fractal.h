@@ -11,14 +11,13 @@ namespace godot {
         GODOT_CLASS(Fractal, Spatial)
 
         private:
-            CSGBox* base_cube;
-
             Ref<Texture> dirt;
             Ref<Texture> stone;
             Ref<Texture> blackstone;
             Ref<Texture> cobblestone;
             Ref<Texture> netherrack;
             Ref<Texture> current_material;
+            enum direction {UP, DOWN, FRONT, BACK, LEFT, RIGHT, NONE};
 
         public:
             static void _register_methods();
@@ -30,7 +29,7 @@ namespace godot {
             void _ready();
 
             void _fractal_button_pressed(int ratio, int iterations);
-            void _fractalize(CSGBox* base_cube, int ratio, int iterations);
+            void _fractalize(CSGBox* base_cube, int ratio, int iterations, int build_direction);
     };
 }
 

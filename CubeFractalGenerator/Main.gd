@@ -5,10 +5,11 @@ var stone = ResourceLoader.load("res://Assets/stone.png")
 var netherrack = ResourceLoader.load("res://Assets/netherrack.png")
 var blackstone = ResourceLoader.load("res://Assets/blackstone.png")
 var cobblestone = ResourceLoader.load("res://Assets/cobblestone.png")
-var fractal = ResourceLoader.load("res://bin/fractal.gdns").new()
 
 var current_material = stone
 var total_blocks
+
+enum direction {UP, DOWN, FRONT, BACK, LEFT, RIGHT, NONE}
 
 signal fractalize(ratio, iterations)
 
@@ -22,7 +23,7 @@ func _ready():
 #func _process(delta):
 #	pass
 
-func _fractalize(cube, ratio, iterations):
+func _fractalize(cube, ratio, iterations, build_direction):
 	if iterations == 1:
 		return
 	
@@ -34,67 +35,74 @@ func _fractalize(cube, ratio, iterations):
 	total_blocks += 12 * ((pow(subSideLength, 2) ) + (subSideLength * (subSideLength - 2)) + pow(subSideLength - 2, 2))
 	
 	# Top cube:
-	var small_cube = CSGBox.new()
-	small_cube.scale = newScale
-	small_cube.transform.origin = cube.transform.origin + (offset * Vector3.UP)
-	small_cube.material = SpatialMaterial.new()
-	small_cube.material.albedo_texture = current_material
-	small_cube.material.uv1_scale = newScale
-	$Fractal.add_child(small_cube)
-	_fractalize(small_cube, ratio, iterations - 1)
+	if build_direction != direction.DOWN:
+		var small_cube = CSGBox.new()
+		small_cube.scale = newScale
+		small_cube.transform.origin = cube.transform.origin + (offset * Vector3.UP)
+		small_cube.material = SpatialMaterial.new()
+		small_cube.material.albedo_texture = current_material
+		small_cube.material.uv1_scale = newScale
+		$Fractal.add_child(small_cube)
+		_fractalize(small_cube, ratio, iterations - 1, direction.UP)
 	
 	# Bottom cube:
-	small_cube = CSGBox.new()
-	small_cube.scale = newScale
-	small_cube.transform.origin = cube.transform.origin + (offset * Vector3.DOWN)
-	small_cube.material = SpatialMaterial.new()
-	small_cube.material.albedo_texture = current_material
-	small_cube.material.uv1_scale = newScale
-	$Fractal.add_child(small_cube)
-	_fractalize(small_cube, ratio, iterations - 1)
+	if build_direction != direction.UP:
+		var small_cube = CSGBox.new()
+		small_cube.scale = newScale
+		small_cube.transform.origin = cube.transform.origin + (offset * Vector3.DOWN)
+		small_cube.material = SpatialMaterial.new()
+		small_cube.material.albedo_texture = current_material
+		small_cube.material.uv1_scale = newScale
+		$Fractal.add_child(small_cube)
+		_fractalize(small_cube, ratio, iterations - 1, direction.DOWN)
 	
 	# Left cube:
-	small_cube = CSGBox.new()
-	small_cube.scale = newScale
-	small_cube.transform.origin = cube.transform.origin + (offset * Vector3.LEFT)
-	small_cube.material = SpatialMaterial.new()
-	small_cube.material.albedo_texture = current_material
-	small_cube.material.uv1_scale = newScale
-	$Fractal.add_child(small_cube)
-	_fractalize(small_cube, ratio, iterations - 1)
+	if build_direction != direction.RIGHT:
+		var small_cube = CSGBox.new()
+		small_cube.scale = newScale
+		small_cube.transform.origin = cube.transform.origin + (offset * Vector3.LEFT)
+		small_cube.material = SpatialMaterial.new()
+		small_cube.material.albedo_texture = current_material
+		small_cube.material.uv1_scale = newScale
+		$Fractal.add_child(small_cube)
+		_fractalize(small_cube, ratio, iterations - 1, direction.LEFT)
 	
 	# Right cube:
-	small_cube = CSGBox.new()
-	small_cube.scale = newScale
-	small_cube.transform.origin = cube.transform.origin + (offset * Vector3.RIGHT)
-	small_cube.material = SpatialMaterial.new()
-	small_cube.material.albedo_texture = current_material
-	small_cube.material.uv1_scale = newScale
-	$Fractal.add_child(small_cube)
-	_fractalize(small_cube, ratio, iterations - 1)
+	if build_direction != direction.LEFT:
+		var small_cube = CSGBox.new()
+		small_cube.scale = newScale
+		small_cube.transform.origin = cube.transform.origin + (offset * Vector3.RIGHT)
+		small_cube.material = SpatialMaterial.new()
+		small_cube.material.albedo_texture = current_material
+		small_cube.material.uv1_scale = newScale
+		$Fractal.add_child(small_cube)
+		_fractalize(small_cube, ratio, iterations - 1, direction.RIGHT)
 	
 	# Front cube:
-	small_cube = CSGBox.new()
-	small_cube.scale = newScale
-	small_cube.transform.origin = cube.transform.origin + (offset * Vector3.FORWARD)
-	small_cube.material = SpatialMaterial.new()
-	small_cube.material.albedo_texture = current_material
-	small_cube.material.uv1_scale = newScale
-	$Fractal.add_child(small_cube)
-	_fractalize(small_cube, ratio, iterations - 1)
+	if build_direction != direction.BACK:
+		var small_cube = CSGBox.new()
+		small_cube.scale = newScale
+		small_cube.transform.origin = cube.transform.origin + (offset * Vector3.FORWARD)
+		small_cube.material = SpatialMaterial.new()
+		small_cube.material.albedo_texture = current_material
+		small_cube.material.uv1_scale = newScale
+		$Fractal.add_child(small_cube)
+		_fractalize(small_cube, ratio, iterations - 1, direction.FRONT)
 	
 	# Back cube
-	small_cube = CSGBox.new()
-	small_cube.scale = newScale
-	small_cube.transform.origin = cube.transform.origin + (offset * Vector3.BACK)
-	small_cube.material = SpatialMaterial.new()
-	small_cube.material.albedo_texture = current_material
-	small_cube.material.uv1_scale = newScale
-	$Fractal.add_child(small_cube)
-	_fractalize(small_cube, ratio, iterations - 1)
+	if build_direction != direction.FRONT:
+		var small_cube = CSGBox.new()
+		small_cube.scale = newScale
+		small_cube.transform.origin = cube.transform.origin + (offset * Vector3.BACK)
+		small_cube.material = SpatialMaterial.new()
+		small_cube.material.albedo_texture = current_material
+		small_cube.material.uv1_scale = newScale
+		$Fractal.add_child(small_cube)
+		_fractalize(small_cube, ratio, iterations - 1, direction.BACK)
 
 func _on_Controls_generate_fractal(ratio, iterations):
 	emit_signal("fractalize", ratio, iterations)
+	
 #	var cubes = $Fractal.get_children()
 #	for cube in cubes:
 #		cube.queue_free()
@@ -114,7 +122,7 @@ func _on_Controls_generate_fractal(ratio, iterations):
 #	$Fractal.add_child(baseCube)
 #
 #	var time_before = OS.get_ticks_usec()
-#	_fractalize(baseCube, ratio, iterations)
+#	_fractalize(baseCube, ratio, iterations, direction.NONE)
 #	var time_taken = OS.get_ticks_usec() - time_before
 #	print ("Fractalizing took " + str(time_taken) + "us")
 #
