@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Assets/HighlandGothicFLF.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Controls.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Assets/netherrack.png" type="Texture" id=5]
 [ext_resource path="res://Assets/blackstone.png" type="Texture" id=6]
 [ext_resource path="res://Assets/cobblestone.png" type="Texture" id=7]
+[ext_resource path="res://Assets/chiseled_stone_bricks.png" type="Texture" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 48
@@ -77,7 +78,7 @@ margin_right = 1365.0
 margin_bottom = 773.0
 custom_fonts/font = SubResource( 1 )
 text = "Material"
-items = [ "Stone", ExtResource( 3 ), 0, false, false, 0, 0, null, "", false, "Dirt", ExtResource( 4 ), 0, false, false, 1, 0, null, "", false, "Netherrack", ExtResource( 5 ), 0, false, false, 2, 0, null, "", false, "Blackstone", ExtResource( 6 ), 0, false, false, 3, 0, null, "", false, "Cobblestone", ExtResource( 7 ), 0, false, false, 4, 0, null, "", false ]
+items = [ "Stone", ExtResource( 3 ), 0, false, false, 0, 0, null, "", false, "Dirt", ExtResource( 4 ), 0, false, false, 1, 0, null, "", false, "Netherrack", ExtResource( 5 ), 0, false, false, 2, 0, null, "", false, "Blackstone", ExtResource( 6 ), 0, false, false, 3, 0, null, "", false, "Cobblestone", ExtResource( 7 ), 0, false, false, 4, 0, null, "", false, "Chiseled Stone Brick", ExtResource( 8 ), 0, false, false, 5, 0, null, "", false ]
 __meta__ = {
 "_edit_use_anchors_": false
 }

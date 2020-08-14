@@ -5,6 +5,7 @@ var stone = ResourceLoader.load("res://Assets/stone.png")
 var netherrack = ResourceLoader.load("res://Assets/netherrack.png")
 var blackstone = ResourceLoader.load("res://Assets/blackstone.png")
 var cobblestone = ResourceLoader.load("res://Assets/cobblestone.png")
+var chiseled = ResourceLoader.load("res://Assets/chiseled_stone_bricks.png")
 
 var current_material = stone
 var total_blocks
@@ -101,33 +102,33 @@ func _fractalize(cube, ratio, iterations, build_direction):
 		_fractalize(small_cube, ratio, iterations - 1, direction.BACK)
 
 func _on_Controls_generate_fractal(ratio, iterations):
-	emit_signal("fractalize", ratio, iterations)
+#	emit_signal("fractalize", ratio, iterations)
 	
-#	var cubes = $Fractal.get_children()
-#	for cube in cubes:
-#		cube.queue_free()
-#
-#	total_blocks = 0
-#
-#	var baseSize = pow(ratio, iterations)
-#	total_blocks += 2 * ((pow(baseSize, 2) ) + (baseSize * (baseSize - 2)) + pow(baseSize - 2, 2))
-#	print("Base cube size: " + str(baseSize) + " blocks")
-#	var baseScale = Vector3(baseSize, baseSize, baseSize)
-#	var baseCube = CSGBox.new()
-#	baseCube.scale = baseScale
-#	baseCube.material = SpatialMaterial.new()
-#	baseCube.material.albedo_texture = current_material
-#	baseCube.material.uv1_scale = baseScale
-#	baseCube.transform.origin = Vector3(0, 0, 0)
-#	$Fractal.add_child(baseCube)
-#
-#	var time_before = OS.get_ticks_usec()
-#	_fractalize(baseCube, ratio, iterations, direction.NONE)
-#	var time_taken = OS.get_ticks_usec() - time_before
-#	print ("Fractalizing took " + str(time_taken) + "us")
-#
-#	print("Total blocks (a little over): " + str(total_blocks))
-#	print("Stacks: " + str(total_blocks / 64))
+	var cubes = $Fractal.get_children()
+	for cube in cubes:
+		cube.queue_free()
+
+	total_blocks = 0
+
+	var baseSize = pow(ratio, iterations)
+	total_blocks += 2 * ((pow(baseSize, 2) ) + (baseSize * (baseSize - 2)) + pow(baseSize - 2, 2))
+	print("Base cube size: " + str(baseSize) + " blocks")
+	var baseScale = Vector3(baseSize, baseSize, baseSize)
+	var baseCube = CSGBox.new()
+	baseCube.scale = baseScale
+	baseCube.material = SpatialMaterial.new()
+	baseCube.material.albedo_texture = current_material
+	baseCube.material.uv1_scale = baseScale
+	baseCube.transform.origin = Vector3(0, 0, 0)
+	$Fractal.add_child(baseCube)
+
+	var time_before = OS.get_ticks_usec()
+	_fractalize(baseCube, ratio, iterations, direction.NONE)
+	var time_taken = OS.get_ticks_usec() - time_before
+	print ("Fractalizing took " + str(time_taken) + "us")
+
+	print("Total blocks (a little over): " + str(total_blocks))
+	print("Stacks: " + str(total_blocks / 64))
 
 
 func _on_Controls_material_chosen(material):
@@ -142,3 +143,5 @@ func _on_Controls_material_chosen(material):
 			current_material = blackstone
 		"Cobblestone":
 			current_material = cobblestone
+		"Chiseled Stone Brick":
+			current_material = chiseled
