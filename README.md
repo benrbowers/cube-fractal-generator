@@ -1,4 +1,4 @@
 # cube-fractal-generator
 A Godot project that generates fractal shapes with the goal of prototyping for minecraft.
-[Here's a video demo of the project.](https://www.youtube.com/watch?v=KDviMxbvcyM&t=65s)
+[Try it out here!.](https://www.benbowers.net/fractal/index.html)
 ![Demo Fractal](/pictures/Fractal.png)
